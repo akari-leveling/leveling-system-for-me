@@ -1,0 +1,52 @@
+class LevelingSystem {
+    constructor() {
+        this.level = 1;
+        this.xp = 0;
+        this.xpRequired = 100;
+        this.strength = 10;
+        this.agility = 10;
+        this.intelligence = 10;
+    }
+
+    gainXP(amount) {
+        this.xp += amount;
+        console.log(`Gained ${amount} XP. Total XP: ${this.xp}`);
+
+        if (this.xp >= this.xpRequired) {
+            this.levelUp();
+        }
+
+        this.updateDisplay();
+    }
+
+    levelUp() {
+        while (this.xp >= this.xpRequired) {
+            this.level++;
+            this.xp -= this.xpRequired;
+            this.xpRequired = Math.floor(this.xpRequired * 1.5);
+            this.increaseStats();
+        }
+    }
+
+    increaseStats() {
+        this.strength += 5;
+        this.agility += 3;
+        this.intelligence += 2;
+    }
+
+    updateDisplay() {
+        document.getElementById('level').innerText = this.level;
+        document.getElementById('xp').innerText = this.xp;
+        document.getElementById('xpRequired').innerText = this.xpRequired;
+        document.getElementById('strength').innerText = this.strength;
+        document.getElementById('agility').innerText = this.agility;
+        document.getElementById('intelligence').innerText = this.intelligence;
+    }
+}
+
+const player = new LevelingSystem();
+player.updateDisplay();
+
+function gainXP(amount) {
+    player.gainXP(amount);
+}
